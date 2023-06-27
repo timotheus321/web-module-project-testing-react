@@ -1,15 +1,55 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen,act, } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Episode from "./../Episode";
+ import userEvent from '@testing-library/user-event';
 
-test("renders without error", () => {});
 
-test("renders the summary test passed as prop", () => {});
+const testEpisode = {
+    id:1,
+    name:"",
+    image: "https://static.tvmaze.com/uploads/images/medium_landscape/342/855786.jpg",
+    season:1,
+    number: 1,
+    summary: 'test summary',
+    runtime: 1
 
-test("renders default image when image is not defined", () => {});
+}
+const testEpisodeWithoutImage = {
+    id:1,
+    name:"",
+    image: null,
+    season:1,
+    number: 1,
+    summary: '',
+    runtime: 1
 
-// ----- EXAMPLE EPISODE TEST OBJECT -----
+}
+
+test("renders without error", () => {
+    render(<Episode episode={testEpisode}/>)
+});
+
+test("renders the summary test passed as prop", () => {
+    render(<Episode episode={testEpisode}/>)
+    const summary = screen.getByText(/test summary/i)
+    
+    expect(summary).toBeInTheDocument();
+    expect(summary).toBeTruthy();
+    expect(summary).toHaveTextContent("test summary")
+});
+
+test("renders default image when image is not defined", async() => {
+    await act(async ()=> {
+        render(<Episode episode={testEpisodeWithoutImage}/>)
+    })
+    
+    const image = screen.getByAltText('Default thumbnail');
+   
+    expect(image).toBeInTheDocument();
+});
+
+// //----- EXAMPLE EPISODE TEST OBJECT -----
 // const exampleEpisodeData = {
 //   airdate: "2016-07-15",
 //   airstamp: "2016-07-15T12:00:00+00:00",

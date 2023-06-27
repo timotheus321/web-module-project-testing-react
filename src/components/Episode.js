@@ -4,12 +4,13 @@ const Episode = (props) => {
   const { episode } = props;
   const { id, image, name, season, number, summary, runtime } = episode;
   const imgsrc = image || 'https://i.ibb.co/2FsfXqM/stranger-things.png';
+  const imgalt = image ? `Episode ${name} thumbnail` : 'Default thumbnail';
 
-  console.log("episode: ", episode);
+  //console.log("episode: ", episode);
 
   return (
     <div className="episode" key={id}>
-      <img className="episode-image" src={imgsrc} alt={imgsrc} />
+      <img className="episode-image" src={imgsrc} alt={imgalt} />
       <div className="episode-info">
         <p className="episode-number">Season {season}, Episode {number}</p>
         <h3>{name}</h3>
